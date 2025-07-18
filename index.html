@@ -7,10 +7,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0c0c0c;
-      --text: #f4f4f4;
-      --accent: #00ffff;
-      --glass: rgba(255, 255, 255, 0.05);
+      --bg: #0d0d0d;
+      --text: #f3f3f3;
+      --accent: #00ffe7;
+      --glass: rgba(255, 255, 255, 0.06);
+      --shadow: rgba(0, 255, 255, 0.2);
     }
 
     * {
@@ -23,7 +24,7 @@
       font-family: 'Outfit', sans-serif;
       background: var(--bg);
       color: var(--text);
-      overflow-x: hidden;
+      scroll-behavior: smooth;
     }
 
     header {
@@ -34,26 +35,32 @@
       flex-direction: column;
       text-align: center;
       position: relative;
-      z-index: 1;
+      overflow: hidden;
     }
 
     header::before {
       content: '';
       position: absolute;
-      width: 600px;
-      height: 600px;
+      width: 1200px;
+      height: 1200px;
       background: radial-gradient(circle, var(--accent), transparent 70%);
-      top: -100px;
+      top: -400px;
       left: 50%;
-      transform: translateX(-50%);
+      transform: translateX(-50%) rotate(0deg);
+      animation: pulse 12s infinite linear;
       filter: blur(150px);
       z-index: 0;
     }
 
+    @keyframes pulse {
+      0% { transform: translateX(-50%) rotate(0deg); }
+      100% { transform: translateX(-50%) rotate(360deg); }
+    }
+
     h1 {
-      font-size: 3.5rem;
+      font-size: 4rem;
       font-weight: 700;
-      z-index: 2;
+      z-index: 1;
     }
 
     .typewriter {
@@ -61,7 +68,7 @@
       margin-top: 1rem;
       color: var(--accent);
       height: 2rem;
-      z-index: 2;
+      z-index: 1;
     }
 
     nav {
@@ -71,23 +78,30 @@
       transform: translateX(-50%);
       background: var(--glass);
       backdrop-filter: blur(12px);
-      padding: 0.5rem 1.5rem;
-      border-radius: 999px;
+      padding: 0.6rem 1.6rem;
+      border-radius: 100px;
       display: flex;
       gap: 1.5rem;
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
-      z-index: 100;
+      box-shadow: 0 0 10px var(--shadow);
+      z-index: 10;
     }
 
     nav a {
       text-decoration: none;
       color: var(--text);
-      font-weight: bold;
-      transition: 0.3s;
+      font-weight: 500;
+      position: relative;
     }
 
-    nav a:hover {
-      color: var(--accent);
+    nav a.active::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      background: var(--accent);
+      left: 0;
+      bottom: -4px;
+      border-radius: 10px;
     }
 
     section {
@@ -102,13 +116,16 @@
       border-radius: 20px;
       padding: 2rem;
       margin-bottom: 2rem;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      transition: transform 0.3s;
+      box-shadow: 0 20px 40px var(--shadow);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease;
     }
 
-    .glass-card:hover {
-      transform: translateY(-5px);
+    .glass-card.reveal {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .glass-card h3 {
@@ -125,6 +142,7 @@
       border-radius: 30px;
       text-decoration: none;
       font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0, 255, 255, 0.3);
     }
 
     .dark-toggle {
@@ -139,6 +157,7 @@
       font-size: 1.2rem;
       cursor: pointer;
       backdrop-filter: blur(8px);
+      z-index: 10;
     }
 
     footer {
@@ -150,18 +169,24 @@
 
     @media (max-width: 600px) {
       h1 {
-        font-size: 2.2rem;
+        font-size: 2.4rem;
       }
+
       nav {
         gap: 1rem;
         font-size: 0.9rem;
+        padding: 0.4rem 1rem;
+      }
+
+      .glass-card {
+        padding: 1.5rem;
       }
     }
   </style>
 </head>
 <body>
 
-  <nav>
+  <nav id="nav">
     <a href="#about">About</a>
     <a href="#projects">Projects</a>
     <a href="#contact">Contact</a>
@@ -174,80 +199,108 @@
 
   <section id="about">
     <div class="glass-card">
-      <h3>About Me</h3>
-      <p>I'm Deepanshu, a curious developer on a mission to build clean, meaningful, and futuristic tech experiences. I love experimenting with UI/UX, frontend engineering, and JavaScript wizardry.</p>
+      <h3>🚀 About Me</h3>
+      <p>I’m Deepanshu, a developer with a passion for crafting beautiful, performant web experiences. I specialize in frontend, but I love diving into creative coding and full-stack projects too.</p>
     </div>
   </section>
 
   <section id="projects">
     <div class="glass-card">
-      <h3>⚡ Project: Portfolio v2</h3>
-      <p>This very site! Designed from scratch using pure HTML, CSS, and JavaScript to showcase my work and creativity.</p>
-      <a href="#" class="btn">Live Preview</a>
+      <h3>💎 Portfolio v2</h3>
+      <p>Designed with custom UI effects and animations using pure HTML, CSS & JavaScript. Fully responsive and visually rich.</p>
+      <a href="#" class="btn">Preview</a>
     </div>
     <div class="glass-card">
-      <h3>🎮 JavaScript Game</h3>
-      <p>A browser-based arcade game with smooth controls and retro graphics, written entirely in vanilla JS.</p>
-      <a href="#" class="btn">Play Game</a>
+      <h3>🕹️ JavaScript Game</h3>
+      <p>An old-school arcade-style browser game built from scratch using only vanilla JavaScript.</p>
+      <a href="#" class="btn">Play</a>
     </div>
   </section>
 
   <section id="contact">
     <div class="glass-card">
-      <h3>📬 Contact</h3>
-      <p>Want to collaborate or just say hi? Email me at <a href="mailto:deepanshu@email.com">deepanshu@email.com</a>.</p>
+      <h3>📨 Get in Touch</h3>
+      <p>Want to work together or grab coffee? Drop me a line at <a href="mailto:deepanshu@email.com">deepanshu@email.com</a>.</p>
     </div>
   </section>
 
   <footer>
-    &copy; 2025 Deepanshu Shukla. Made with code & caffeine ☕
+    &copy; 2025 Deepanshu Shukla — All rights reserved.
   </footer>
 
   <button class="dark-toggle" onclick="toggleDark()">🌙</button>
 
   <script>
-    const words = ["Frontend Developer", "Creative Coder", "UI Designer", "JavaScript Explorer"];
-    let i = 0, j = 0, current = "", isDeleting = false;
+    const typingWords = ["Frontend Developer", "Creative Engineer", "JavaScript Enthusiast", "Web Artisan"];
+    let i = 0, j = 0, isDeleting = false;
 
     function typeEffect() {
       const element = document.getElementById("typing");
+      const word = typingWords[i];
 
-      if (i < words.length) {
-        if (!isDeleting && j <= words[i].length) {
-          current = words[i].substring(0, j++);
-          element.textContent = current;
+      element.textContent = word.substring(0, j);
+
+      if (!isDeleting) {
+        j++;
+        if (j > word.length) {
+          isDeleting = true;
+          setTimeout(typeEffect, 1200);
+          return;
         }
-
-        if (isDeleting && j >= 0) {
-          current = words[i].substring(0, j--);
-          element.textContent = current;
-        }
-
-        if (j === words[i].length) isDeleting = true;
-        if (isDeleting && j === 0) {
+      } else {
+        j--;
+        if (j === 0) {
           isDeleting = false;
-          i = (i + 1) % words.length;
+          i = (i + 1) % typingWords.length;
         }
       }
 
       setTimeout(typeEffect, isDeleting ? 50 : 100);
     }
+
     typeEffect();
 
     function toggleDark() {
       const r = document.documentElement;
-      if (r.style.getPropertyValue('--bg') === '#ffffff') {
-        r.style.setProperty('--bg', '#0c0c0c');
-        r.style.setProperty('--text', '#f4f4f4');
-        r.style.setProperty('--glass', 'rgba(255, 255, 255, 0.05)');
-        r.style.setProperty('--accent', '#00ffff');
-      } else {
-        r.style.setProperty('--bg', '#ffffff');
-        r.style.setProperty('--text', '#111');
-        r.style.setProperty('--glass', 'rgba(0, 0, 0, 0.05)');
-        r.style.setProperty('--accent', '#0077ff');
-      }
+      const isLight = r.style.getPropertyValue('--bg') === '#ffffff';
+      r.style.setProperty('--bg', isLight ? '#0d0d0d' : '#ffffff');
+      r.style.setProperty('--text', isLight ? '#f3f3f3' : '#111');
+      r.style.setProperty('--accent', isLight ? '#00ffe7' : '#0066ff');
+      r.style.setProperty('--glass', isLight ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.05)');
     }
+
+    // Scroll reveal
+    const cards = document.querySelectorAll('.glass-card');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('reveal');
+      });
+    }, { threshold: 0.15 });
+
+    cards.forEach(card => observer.observe(card));
+
+    // Active nav
+    const navLinks = document.querySelectorAll('nav a');
+    const sections = document.querySelectorAll('section');
+
+    window.addEventListener('scroll', () => {
+      let current = "";
+      sections.forEach(section => {
+        const top = window.scrollY;
+        const offset = section.offsetTop - 100;
+        const height = section.offsetHeight;
+        if (top >= offset && top < offset + height) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove("active");
+        if (link.getAttribute("href") === "#" + current) {
+          link.classList.add("active");
+        }
+      });
+    });
   </script>
 </body>
 </html>
